@@ -16,3 +16,7 @@ or
 
 ## Test reports
 Test reports can be found in ./build/reports/tests (Yes, there are not many of them)
+
+### Game controls
+
+Explore world using arrows. Slain monsters by walking into them.
