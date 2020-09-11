@@ -1,12 +1,17 @@
-package mlemmy.recruitmentgame;
+package mlemmy.recruitmentgame.world;
+
+import mlemmy.recruitmentgame.entities.Creature;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class World implements Serializable {
 
     private final int height;
     private final int width;
     private final Tile[][] tiles;
+    private final List<Creature> creatures = new ArrayList<>();
 
     public World(Tile[][] tiles) {
         this.tiles = tiles;
@@ -22,12 +27,21 @@ public class World implements Serializable {
         }
     }
 
-    public int height() {
-        return height;
+    public Creature creatureAt(int h, int w) {
+        for (Creature creature : creatures) {
+            if (creature.w == w && creature.h == h) {
+                return creature;
+            }
+        }
+        return null;
     }
 
-    public int width() {
-        return width;
+    public void addCreature(Creature creature) {
+        creatures.add(creature);
+    }
+
+    public void remove(Creature creatureToRemove) {
+        creatures.remove(creatureToRemove);
     }
 
     public static World staticWorld() {
@@ -41,7 +55,10 @@ public class World implements Serializable {
                 }
             }
         }
-        return new World(tiles);
+        World world = new World(tiles);
+        world.addCreature(new Creature(2, 2));
+        world.addCreature(new Creature(6, 6));
+        world.addCreature(new Creature(4, 8));
+        return world;
     }
-
 }

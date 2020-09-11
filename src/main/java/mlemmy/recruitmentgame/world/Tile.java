@@ -1,4 +1,4 @@
-package mlemmy.recruitmentgame;
+package mlemmy.recruitmentgame.world;
 
 public enum Tile {
 

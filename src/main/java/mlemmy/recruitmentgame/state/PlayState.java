@@ -1,6 +1,6 @@
 package mlemmy.recruitmentgame.state;
 
-import mlemmy.recruitmentgame.World;
+import mlemmy.recruitmentgame.world.World;
 import mlemmy.recruitmentgame.display.Display;
 import mlemmy.recruitmentgame.entities.Player;
 
@@ -27,16 +27,16 @@ class PlayState implements GameState, Serializable {
     @Override
     public GameState handleInput(KeyEvent key) {
         switch (key.getKeyCode()) {
-            case KeyEvent.VK_UP:
+            case KeyEvent.VK_DOWN:
                 player.move(0, 1);
                 break;
-            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_UP:
                 player.move(0, -1);
                 break;
-            case KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_LEFT:
                 player.move(-1, 0);
                 break;
-            case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_RIGHT:
                 player.move(1, 0);
                 break;
             case KeyEvent.VK_S:
@@ -59,6 +59,9 @@ class PlayState implements GameState, Serializable {
             for (int j = 0; j < displayWidth; j++) {
                 if (i == displayHeight / 2 && j == displayWidth / 2) {
                     sb.append(player.symbol());
+                } else if(world.creatureAt(i + player.h - displayHeight / 2, j + player.w - displayWidth / 2) != null) {
+                    char symbol = world.creatureAt(i + player.h - displayHeight / 2, j + player.w - displayWidth / 2).symbol();
+                    sb.append(symbol);
                 } else {
                     char symbol = world.tile(i + player.h - displayHeight / 2, j + player.w - displayWidth / 2).symbol();
                     sb.append(symbol);
@@ -66,7 +69,9 @@ class PlayState implements GameState, Serializable {
             }
             sb.append('\n');
         }
-        sb.append("Character: " + player.name());
+        sb.append("Character: ").append(player.name()).append("\n");
+        sb.append("Experience: ").append(player.experience()).append("\n");
+        sb.append("Press S to save game");
         display.write(sb.toString());
     }
 
