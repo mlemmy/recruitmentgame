@@ -12,9 +12,9 @@ public class World {
         this.width = tiles[0].length;
     }
 
-    public Tile tile(int x, int y) {
-        if (x >= 0 && x < height && y >= 0 && y < width) {
-            return tiles[x][y];
+    public Tile tile(int h, int w) {
+        if (h >= 0 && h < height && w >= 0 && w < width) {
+            return tiles[h][w];
         } else {
             return Tile.OUT_OF_BOUNDS;
         }
@@ -29,7 +29,7 @@ public class World {
     }
 
     public static World staticWorld() {
-        Tile[][] tiles = new Tile[50][100];
+        Tile[][] tiles = new Tile[10][20];
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
                 if (i == 0 || i == tiles.length - 1 || j == 0 || j == tiles[i].length - 1) {

@@ -2,6 +2,7 @@ package mlemmy.recruitmentgame.state;
 
 import mlemmy.recruitmentgame.World;
 import mlemmy.recruitmentgame.display.Display;
+import mlemmy.recruitmentgame.entities.Player;
 
 import java.awt.event.KeyEvent;
 
@@ -10,31 +11,30 @@ class PlayState implements GameState {
     private final int displayWidth;
     private final int displayHeight;
 
-    private int centerH = 1;
-    private int centerW = 1;
-
     private final World world;
+    private final Player player;
 
     PlayState(int displayHeight, int displayWidth) {
         this.displayHeight = displayHeight;
         this.displayWidth = displayWidth;
         world = World.staticWorld();
+        player = new Player(1, 1, world);
     }
 
     @Override
     public GameState handleInput(KeyEvent key) {
         switch (key.getKeyCode()) {
             case KeyEvent.VK_UP:
-                scrollBy(0, 1);
+                player.move(0, 1);
                 break;
             case KeyEvent.VK_DOWN:
-                scrollBy(0, -1);
+                player.move(0, -1);
                 break;
             case KeyEvent.VK_RIGHT:
-                scrollBy(-1, 0);
+                player.move(-1, 0);
                 break;
             case KeyEvent.VK_LEFT:
-                scrollBy(1, 0);
+                player.move(1, 0);
                 break;
             default:
                 break;
@@ -52,19 +52,14 @@ class PlayState implements GameState {
         for (int i = 0; i < displayHeight; i++) {
             for (int j = 0; j < displayWidth; j++) {
                 if (i == displayHeight/2 && j == displayWidth/2) {
-                    sb.append("@");
+                    sb.append(player.symbol());
                 } else {
-                    char symbol = world.tile(i + centerH - displayHeight/2, j + centerW - displayWidth/2).symbol();
+                    char symbol = world.tile(i + player.h - displayHeight/2, j + player.w - displayWidth/2).symbol();
                     sb.append(symbol);
                 }
             }
             sb.append('\n');
         }
         display.write(sb.toString());
-    }
-
-    private void scrollBy(int width, int height) {
-        centerW = Math.max(0, Math.min(centerW + width, world.width() - 1));
-        centerH = Math.max(0, Math.min(centerH + height, world.height() - 1));
     }
 }
