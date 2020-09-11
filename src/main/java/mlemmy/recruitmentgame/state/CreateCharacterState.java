@@ -1,12 +1,18 @@
 package mlemmy.recruitmentgame.state;
 
 import mlemmy.recruitmentgame.display.Display;
+import mlemmy.recruitmentgame.save.GameSaveSystem;
 
 import java.awt.event.KeyEvent;
 
 public class CreateCharacterState implements GameState {
 
-    private StringBuilder characterName = new StringBuilder();
+    private final StringBuilder characterName = new StringBuilder();
+    private final GameSaveSystem saveSystem;
+
+    public CreateCharacterState(GameSaveSystem saveSystem) {
+        this.saveSystem = saveSystem;
+    }
 
     @Override
     public GameState handleInput(KeyEvent key) {
@@ -14,7 +20,7 @@ public class CreateCharacterState implements GameState {
             characterName.append(key.getKeyChar());
         }
         if (key.getKeyCode() == KeyEvent.VK_ENTER) {
-            return new PlayState(characterName.toString(), 20, 60);
+            return new PlayState(characterName.toString(), 20, 60, saveSystem);
         }
         return this;
     }

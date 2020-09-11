@@ -1,19 +1,24 @@
 package mlemmy.recruitmentgame.state;
 
 import mlemmy.recruitmentgame.display.Display;
+import mlemmy.recruitmentgame.save.GameSaveSystem;
+import mlemmy.recruitmentgame.save.SaveDoesNotExist;
 
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 
 public class MenuState implements GameState {
+
+    private final GameSaveSystem saveSystem;
+
+    public MenuState(GameSaveSystem saveSystem) {
+        this.saveSystem = saveSystem;
+    }
 
     @Override
     public GameState handleInput(KeyEvent key) {
         switch (key.getKeyCode()) {
             case KeyEvent.VK_ENTER:
-                return new CreateCharacterState();
+                return new CreateCharacterState(saveSystem);
             case KeyEvent.VK_L:
                 return loadGame();
         }
@@ -28,18 +33,10 @@ public class MenuState implements GameState {
     }
 
     private GameState loadGame() {
-        if (!new File("savegame").exists()) {
+        try {
+            return saveSystem.loadGame();
+        } catch (SaveDoesNotExist saveDoesNotExist) {
             return this;
         }
-        try {
-            FileInputStream fileIn = new FileInputStream("savegame");
-            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            PlayState obj = (PlayState) objectIn.readObject();
-            objectIn.close();
-            return obj;
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-        throw new RuntimeException("No game save");
     }
 }

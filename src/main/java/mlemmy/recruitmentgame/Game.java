@@ -2,8 +2,10 @@ package mlemmy.recruitmentgame;
 
 import mlemmy.recruitmentgame.display.Display;
 import mlemmy.recruitmentgame.display.SwingDisplay;
-import mlemmy.recruitmentgame.state.MenuState;
+import mlemmy.recruitmentgame.save.FileSaveSystem;
+import mlemmy.recruitmentgame.save.GameSaveSystem;
 import mlemmy.recruitmentgame.state.GameState;
+import mlemmy.recruitmentgame.state.MenuState;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -14,8 +16,9 @@ public class Game implements KeyListener {
     private final Display display;
 
     public Game() {
+        GameSaveSystem saveSystem = new FileSaveSystem();
         display = new SwingDisplay(this);
-        state = new MenuState();
+        state = new MenuState(saveSystem);
         state.displayOutput(display);
     }
 

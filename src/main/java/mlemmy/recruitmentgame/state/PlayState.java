@@ -1,25 +1,26 @@
 package mlemmy.recruitmentgame.state;
 
-import mlemmy.recruitmentgame.world.World;
 import mlemmy.recruitmentgame.display.Display;
 import mlemmy.recruitmentgame.entities.Player;
+import mlemmy.recruitmentgame.save.GameSaveSystem;
+import mlemmy.recruitmentgame.world.World;
 
 import java.awt.event.KeyEvent;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-class PlayState implements GameState, Serializable {
+public class PlayState implements GameState, Serializable {
 
     private final int displayWidth;
     private final int displayHeight;
 
+    private final GameSaveSystem saveSystem;
     private final World world;
     private final Player player;
 
-    PlayState(String playerName, int displayHeight, int displayWidth) {
+    PlayState(String playerName, int displayHeight, int displayWidth, GameSaveSystem saveSystem) {
         this.displayHeight = displayHeight;
         this.displayWidth = displayWidth;
+        this.saveSystem = saveSystem;
         world = World.staticWorld();
         player = new Player(playerName, 1, 1, world);
     }
@@ -59,7 +60,7 @@ class PlayState implements GameState, Serializable {
             for (int j = 0; j < displayWidth; j++) {
                 if (i == displayHeight / 2 && j == displayWidth / 2) {
                     sb.append(player.symbol());
-                } else if(world.creatureAt(i + player.h - displayHeight / 2, j + player.w - displayWidth / 2) != null) {
+                } else if (world.creatureAt(i + player.h - displayHeight / 2, j + player.w - displayWidth / 2) != null) {
                     char symbol = world.creatureAt(i + player.h - displayHeight / 2, j + player.w - displayWidth / 2).symbol();
                     sb.append(symbol);
                 } else {
@@ -71,18 +72,11 @@ class PlayState implements GameState, Serializable {
         }
         sb.append("Character: ").append(player.name()).append("\n");
         sb.append("Experience: ").append(player.experience()).append("\n");
-        sb.append("Press S to save game");
+        sb.append("Press S to save game, ESC to exit");
         display.write(sb.toString());
     }
 
     private void saveGame() {
-        try {
-            FileOutputStream fileOut = new FileOutputStream("savegame");
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(this);
-            objectOut.close();
-        } catch (Exception e) {
-            System.err.println(e);
-        }
+        saveSystem.saveGame(this);
     }
 }
