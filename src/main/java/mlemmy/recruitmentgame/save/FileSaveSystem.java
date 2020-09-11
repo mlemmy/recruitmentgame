@@ -6,12 +6,16 @@ import java.io.*;
 
 public class FileSaveSystem implements GameSaveSystem {
 
-    public static final String SAVE_FILE = "savegame";
+    private final String saveFileName;
+
+    public FileSaveSystem(String saveFileName) {
+        this.saveFileName = saveFileName;
+    }
 
     @Override
     public void saveGame(PlayState game) {
         try {
-            FileOutputStream fileOut = new FileOutputStream(SAVE_FILE);
+            FileOutputStream fileOut = new FileOutputStream(saveFileName);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
             objectOut.writeObject(game);
             objectOut.close();
@@ -22,13 +26,13 @@ public class FileSaveSystem implements GameSaveSystem {
 
     @Override
     public Boolean saveExists() {
-        return new File(SAVE_FILE).exists();
+        return new File(saveFileName).exists();
     }
 
     @Override
     public PlayState loadGame() throws SaveDoesNotExist {
         try {
-            FileInputStream fileIn = new FileInputStream(SAVE_FILE);
+            FileInputStream fileIn = new FileInputStream(saveFileName);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
             PlayState obj = (PlayState) objectIn.readObject();
             objectIn.close();

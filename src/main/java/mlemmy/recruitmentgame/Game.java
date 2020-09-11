@@ -16,7 +16,7 @@ public class Game implements KeyListener {
     private final Display display;
 
     public Game() {
-        GameSaveSystem saveSystem = new FileSaveSystem();
+        GameSaveSystem saveSystem = new FileSaveSystem("savegame");
         display = new SwingDisplay(this);
         state = new MenuState(saveSystem);
         state.displayOutput(display);

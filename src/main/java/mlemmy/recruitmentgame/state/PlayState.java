@@ -17,7 +17,7 @@ public class PlayState implements GameState, Serializable {
     private final World world;
     private final Player player;
 
-    PlayState(String playerName, int displayHeight, int displayWidth, GameSaveSystem saveSystem) {
+    public PlayState(String playerName, int displayHeight, int displayWidth, GameSaveSystem saveSystem) {
         this.displayHeight = displayHeight;
         this.displayWidth = displayWidth;
         this.saveSystem = saveSystem;
