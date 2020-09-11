@@ -3,7 +3,9 @@ package mlemmy.recruitmentgame.entities;
 import mlemmy.recruitmentgame.Tile;
 import mlemmy.recruitmentgame.World;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
 
     public static final char PLAYER_SYMBOL = '@';
 
@@ -11,6 +13,7 @@ public class Player {
     public int h;
 
     private final World world;
+    private int experience;
 
     public Player(int startingWidth, int startingHeight, World world) {
         this.w = startingWidth;

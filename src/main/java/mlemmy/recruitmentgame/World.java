@@ -1,6 +1,8 @@
 package mlemmy.recruitmentgame;
 
-public class World {
+import java.io.Serializable;
+
+public class World implements Serializable {
 
     private final int height;
     private final int width;

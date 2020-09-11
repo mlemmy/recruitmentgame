@@ -19,3 +19,9 @@ application {
 test {
     useJUnitPlatform()
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'mlemmy.recruitmentgame.Game'
+    }
+}

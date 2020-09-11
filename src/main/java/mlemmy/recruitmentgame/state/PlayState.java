@@ -5,8 +5,11 @@ import mlemmy.recruitmentgame.display.Display;
 import mlemmy.recruitmentgame.entities.Player;
 
 import java.awt.event.KeyEvent;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-class PlayState implements GameState {
+class PlayState implements GameState, Serializable {
 
     private final int displayWidth;
     private final int displayHeight;
@@ -36,6 +39,9 @@ class PlayState implements GameState {
             case KeyEvent.VK_LEFT:
                 player.move(1, 0);
                 break;
+            case KeyEvent.VK_S:
+                saveGame();
+                break;
             default:
                 break;
         }
@@ -51,15 +57,26 @@ class PlayState implements GameState {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < displayHeight; i++) {
             for (int j = 0; j < displayWidth; j++) {
-                if (i == displayHeight/2 && j == displayWidth/2) {
+                if (i == displayHeight / 2 && j == displayWidth / 2) {
                     sb.append(player.symbol());
                 } else {
-                    char symbol = world.tile(i + player.h - displayHeight/2, j + player.w - displayWidth/2).symbol();
+                    char symbol = world.tile(i + player.h - displayHeight / 2, j + player.w - displayWidth / 2).symbol();
                     sb.append(symbol);
                 }
             }
             sb.append('\n');
         }
         display.write(sb.toString());
+    }
+
+    private void saveGame() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("savegame");
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(this);
+            objectOut.close();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 }
