@@ -13,7 +13,7 @@ public class MenuState implements GameState {
     public GameState handleInput(KeyEvent key) {
         switch (key.getKeyCode()) {
             case KeyEvent.VK_ENTER:
-                return new PlayState(20, 60);
+                return new CreateCharacterState();
             case KeyEvent.VK_L:
                 return loadGame();
         }

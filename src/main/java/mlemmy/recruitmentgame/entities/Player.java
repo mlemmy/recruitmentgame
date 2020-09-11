@@ -12,13 +12,19 @@ public class Player implements Serializable {
     public int w;
     public int h;
 
+    private String name;
     private final World world;
     private int experience;
 
-    public Player(int startingWidth, int startingHeight, World world) {
+    public Player(String name, int startingWidth, int startingHeight, World world) {
+        this.name = name;
         this.w = startingWidth;
         this.h = startingHeight;
         this.world = world;
+    }
+
+    public String name() {
+        return name;
     }
 
     public char symbol() {

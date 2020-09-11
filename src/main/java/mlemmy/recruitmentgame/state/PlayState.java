@@ -17,11 +17,11 @@ class PlayState implements GameState, Serializable {
     private final World world;
     private final Player player;
 
-    PlayState(int displayHeight, int displayWidth) {
+    PlayState(String playerName, int displayHeight, int displayWidth) {
         this.displayHeight = displayHeight;
         this.displayWidth = displayWidth;
         world = World.staticWorld();
-        player = new Player(1, 1, world);
+        player = new Player(playerName, 1, 1, world);
     }
 
     @Override
@@ -66,6 +66,7 @@ class PlayState implements GameState, Serializable {
             }
             sb.append('\n');
         }
+        sb.append("Character: " + player.name());
         display.write(sb.toString());
     }
 
