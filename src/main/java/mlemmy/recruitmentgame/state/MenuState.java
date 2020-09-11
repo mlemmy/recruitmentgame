@@ -28,8 +28,12 @@ public class MenuState implements GameState {
 
     @Override
     public void displayOutput(Display display) {
-        String message = "Press enter to start" + "\n" + "Press L to load saved game";
-        display.write(message);
+        StringBuilder message = new StringBuilder();
+        message.append("Press enter to start").append("\n");
+        if (saveSystem.saveExists()) {
+            message.append("Press L to load saved game");
+        }
+        display.write(message.toString());
     }
 
     private GameState loadGame() {

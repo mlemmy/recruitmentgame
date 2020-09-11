@@ -38,8 +38,7 @@ public class FileSaveSystem implements GameSaveSystem {
             objectIn.close();
             return obj;
         } catch (Exception e) {
-            System.err.println(e);
+            throw new SaveDoesNotExist();
         }
-        throw new SaveDoesNotExist();
     }
 }
