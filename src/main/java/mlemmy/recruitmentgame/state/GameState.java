@@ -4,9 +4,9 @@ import mlemmy.recruitmentgame.display.Display;
 
 import java.awt.event.KeyEvent;
 
-public interface State {
+public interface GameState {
 
-    State handleInput(KeyEvent key);
+    GameState handleInput(KeyEvent key);
 
     void displayOutput(Display display);
 

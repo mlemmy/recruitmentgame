@@ -4,11 +4,11 @@ import mlemmy.recruitmentgame.display.Display;
 
 import java.awt.event.KeyEvent;
 
-public class MenuState implements State {
+public class MenuState implements GameState {
 
     @Override
-    public State handleInput(KeyEvent key) {
-        return new PlayState();
+    public GameState handleInput(KeyEvent key) {
+        return new PlayState(20, 60);
     }
 
     @Override

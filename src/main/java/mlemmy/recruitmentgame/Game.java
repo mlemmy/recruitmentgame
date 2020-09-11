@@ -3,14 +3,14 @@ package mlemmy.recruitmentgame;
 import mlemmy.recruitmentgame.display.Display;
 import mlemmy.recruitmentgame.display.SwingDisplay;
 import mlemmy.recruitmentgame.state.MenuState;
-import mlemmy.recruitmentgame.state.State;
+import mlemmy.recruitmentgame.state.GameState;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Game implements KeyListener {
 
-    private State state;
+    private GameState state;
     private final Display display;
 
     public Game() {
